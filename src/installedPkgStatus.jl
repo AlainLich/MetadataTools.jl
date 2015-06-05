@@ -152,7 +152,7 @@ function pkgInstalledAsPkgMeta(userFilterDirFn::Function = userFilterDirsDefault
     for pkgn in pkgINames
        v        =  pkgInstalled[pkgn]        # get the version number installed
        dir      =  joinpath(Pkg.dir(),pkgn)
-       urls     =  gitUrlsFromRemote(dir)
+       url     =  "git://localhost" * dir
        comInfo  =  getCommitInfo(dir)
        versions =  getVersionsPM(v,comInfo["commit"],dir )
        length(versions) > 1 && println("In  pkgInstalledAsPkgMeta, length version for $pkgn =",
@@ -160,7 +160,7 @@ function pkgInstalledAsPkgMeta(userFilterDirFn::Function = userFilterDirsDefault
        gitDir   =  Pkg.Git.dir(dir)
        fix      =  true
 
-       lclPkM   =  PkgMeta(pkgn,urls[1][2],versions)
+       lclPkM   =  PkgMeta(pkgn,url,versions)
        dictRet[pkgn]  =  lclPkM
     end
     dictRet
